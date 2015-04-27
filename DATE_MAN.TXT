@@ -1,0 +1,899 @@
+                                             class Date - 16
+                         Date Class
+class Date                                               2
+     Derivation                                          2
+     Public Members                                      2
+     Member Functions                                    4
+          Date::AddMonths                                4
+          Date::AddWeeks                                 4
+          Date::AddYears                                 4
+          Date::BOM                                      5
+          Date::BOY                                      5
+          Date::CDOW                                     5
+          Date::CMonth                                   5
+          Date Comparison Operators                      6
+          Date::Date                                     6
+          Date::Day                                      8
+          Date::DaysInMonth                              8
+          Date::DOY                                      8
+          Date::EOM                                      8
+          Date::eom                                      9
+          Date::EOY                                      9
+          Date::FirstDOM()                               9
+          Date::formatDate                               9
+          Date::getDate                                  10
+          Date Holiday Constructors                      10
+          Date::isLeapYear                               11
+          Date::isDST                                    11
+          Date::julDate                                  11
+          Date::NDOW                                     12
+          Date::NMonth                                   12
+          Date::NYear4                                   12
+          Date::operator <<                              12
+          Date::operator const char *                    13
+          Date::operator +,-                             13
+          Date::operators +=, -=                         13
+          Date::operators ++, --                         14
+          Date::Set                                      14
+          Date::setCentury                               14
+          Date::setDST                                   15
+          Date::setFormat                                15
+          Date::setSTD                                   15
+          Date::setOption                                15
+          Date::WOM                                      16
+          Date::WOY                                      16
+          class Date
+       A Date object represents absolute dates.  It allows
+        conversion to and from a selection of ASCII
+        representations, and a complete set of arithmetic
+        operations.   Date values are based on the number
+        of days since 4713BCE.
+ 
+Derivation
+        The Date class was not designed for derivation.
+        Because there are no virtual functions, the size of
+        Date object is exactly 12 bytes, assuming a
+        compiler making shorts 2 bytes, and longs 4 bytes.
+
+Public Members
+
+
+       Construction/      
+       Destruction
+       Date               Creates Date objects in various
+                          ways.
+       NewYearsDay        Creates a Date object the
+       PresidentsDay      represent the listed holiday.
+       ValentinesDay,     (static member functions)
+       etc.
+       BOM, EOM, BOY,     Create  Date objects that
+       EOY                represents the first & final days
+                          of the month & year in which the
+                          given Date object falls.
+                          
+       Extraction         
+       CDOW               Returns as a Character string the
+                          day of the Week that  this Date
+                          object represents.  ('Sunday' ..
+                          'Saturday')
+       CMonth             Returns as a character string the
+                          month that is Date object
+                          represents ("January"...
+                          "December"
+       Day                Returns the day of the month that
+                          this Date object represents.
+       DaysInMonth        Returns the number of days in the
+                          month of this Date object.
+                          (28..31)
+       DOY                Returns as an integer the
+                          relative date since Jan. 1
+       FirstDOM           Returns as an integer the day of
+                          the week of the first day of the
+                          month in which this Date object
+                          falls.
+       julDate            Returns Julian date (days since
+                          4713BCE) as a long.
+       NDOW               Returns as a integer the day of
+                          the week that this Date object
+                          represents (1 = Sunday, 7 =
+                          Saturday)
+       NMonth             Returns as an integer the month
+                          that this Date object represents.
+       NYear4             Returns as an integer the year
+                          this Date object represents.
+       WOM                Returns the Week Of Month  (1..6)
+                          this Date falls in.
+       WOY                Returns the Week Of Year  (1..52)
+                          this Date object falls in.
+                          
+       Conversion         
+       getDate            Returns as an MSDOS date_t
+                          structure, the date represented
+                          by the Date object.
+       eom                Returns as an MSDOS date_t, the
+                          last day of month this Date
+                          object represents.
+                          
+       Operators          
+       operator +,-       Adds and subtracts days (given as
+                          ints or longs) to Date objects.
+       operator -         Subtracts one Date object from
+                          another returning as a long, the
+                          number of days between them.
+       operator +=, -=    Adds & subtracts a number of days
+                          to and from this Date object.
+       operator ++, --    Pre- & postfix incrementor &
+                          decrementor, alters Date object
+                          by one day.
+       operator==,<,      Compares two absolute Dates.
+       etc.
+                          
+       Operations         
+       AddMonths          Adds months to the Date Object
+                          (adjusts year as required)
+       AddWeeks           Adds weeks to the Date Object.
+       AddYears           Adds years to the Date Object.
+       isLeapYear()       Returns true if leap year, false
+                          if not
+       Set                Full set of functions to set an
+                          existing Date object to a new
+                          value  (to complement the set of
+                          constructors)
+       isDST              returns true if in Daylight
+                          Saving Time, false if not.
+                          
+       Archive/Dump       
+       operator <<        Outputs a Date object to a
+                          ostream object.
+
+Member Functions
+
+            
+            Date::AddMonths
+            
+Syntax      Date &AddMonths( int nCount =1);
+            
+Parameters  nCount
+                 Indicates the number of months to add.
+            
+Remarks     This function allows you to add (or subtract,
+            if nCount is negative)  months to a Date
+            object.
+            
+Example     Date d1 = Date("01/15/93");
+            d1.AddMonths(3);
+            assert( d1 == Date("04/15/93"));
+
+            
+            Date::AddWeeks
+            
+Syntax      Date &AddWeeks( int nCount =1);
+            
+Parameters  nCount
+                 Indicates the number of weeks to add.
+            
+Remarks     This function allows you to add (or subtract,
+            if nCount is negative)  weeks to a Date object.
+            
+Example     Date d1 = Date("01/15/93");
+            d1.AddWeeks(3);
+            assert( d1 == Date("02/05/93"));
+
+            
+            Date::AddYears
+            
+Syntax      Date &AddYears( int nCount =1);
+            
+Parameters  nCount
+                 Indicates the number of years to add.
+            
+Remarks     This function allows you to add (or subtract,
+            if nCount is negative)  years to a Date object.
+            
+Example     Date d1 = Date("01/15/93");
+            d1.AddYears(3);
+            assert( d1 == Date("01/15/96"));
+
+            
+            Date::BOM
+            
+Syntax      inline Date BOM(void) const;
+            
+Remarks     Returns a new Date  object  which represents
+            the first day of the month of this Date object.
+            
+Example     Date d1 = Date("07/04/93");
+            Date d2 = d1.BOM();
+            assert(d2 == Date("07/01/93"));
+
+            
+            Date::BOY
+            
+Syntax      inline Date BOY(void) const;
+            
+Remarks     Returns a new Date  object  which represents
+            the first day of the year of this Date object.
+            
+Example     Date d1 = Date("07/04/93");
+            Date d2 = d1.BOY();
+            assert(d2 == Date("01/01/93"));
+
+            
+            Date::CDOW
+            
+Syntax      inline    const char *CDOW(void) const
+            
+Remarks     Returns a pointer to a string holding the day of
+            the week  ('Sunday'..'Saturday').  Note: That
+            all calls to CDOW, as well as CMonth and
+            formatDate share a common buffer, and subsequent
+            calls overwrite previous strings.
+            
+Example     Date  d1 = Date("09/01/1993");
+            assert(strcmp(d1.CDOW(), "Wednesday") == 0);
+
+            
+            Date::CMonth
+            
+Syntax      inline    const char * CMonth() const;
+            
+Remarks     Returns a pointer to a string holding the name
+            of the month of this Date object
+            ('January'...'December').
+             Note: That all calls to CMonth, as well as
+            CDOW and formatDate share a common buffer, and
+            subsequent calls overwrite previous strings.
+            
+Example     Date d1 = Date("09/01/1993");
+            assert(strcmp(d1.CMonth(), "September")==0);
+
+            
+            Date Comparison Operators
+            
+Syntax      inline    int  operator <  (const Date &date)
+            const;
+            inline    int  operator <= (const Date &date)
+            const;
+            inline    int  operator >  (const Date &date)
+            const;
+            inline    int  operator >= (const Date &date)
+            const;
+            inline    int  operator == (const Date &date)
+            const;
+            inline    int  operator != (const Date &date)
+            const;
+            
+Remarks     These operators  compare two absolute dates and
+            return TRUE if the condition is true; otherwise
+            FALSE.
+            
+Example     Date d1 = Date("Today");
+            Date d2 = d1 + 30;  // 30 days later.
+            assert( d1 != d2);
+            assert( d1 < d2);
+            assert( d1<=d2);
+            
+
+            Date::Date
+            
+Syntax      Date();
+            Date ( int nMonth, int nDay,  int nYear );
+            Date ( long lJulian);
+            Date (const char * szDate);
+            Date (const Date & dtDateSrc);
+            Date (const tm & TM);
+            Date (int nWeeknum, int nDow,  int nMonth, int
+            nYear);
+            Date (const DOSDATE_T &ds);
+            
+            
+Parameters  dtDateSrc
+                Indicates a Date object which already exists
+            
+            nMonth, nDay, nYear
+                Indicates month, day of month, and year.
+            
+            lJulian
+                Indicates the number of days from 2714BCE.
+            
+            szDate
+                Indicates a character string containing a
+            formatted date.
+            
+            nWeeknum, nDOW
+                Indicates the week number of the month, and
+            the day of the week.
+            
+            TM
+                Indicates a TM struct value.
+            
+            ds
+                Indicates a MSDOS  date struct value.
+            
+            
+Remarks     All these constructor create a new Date object
+            initialized with the specified absolute date.
+            
+            Each constructor is described below:
+            
+            Date();
+               Constructs a new Date object with a zero
+            (illegal) date.
+               Note  Zero is an invalid date. This
+            constructor is provided to allow the definition
+            of Date object arrays.  You should initialize
+            such arrays with valid dates prior to use.
+            
+            Date (const Date & dtDateSrc);
+                Constructs a Date object from another Date
+            value.
+            
+            Date ( int nMonth, int nDay,  int nYear );
+                Constructs a Date object from the given
+            components, with each component constraint to
+            the following ranges:
+            Component      Range
+            nYear          -4713 - 9999
+            nMonth         1-12 or one of the Months enums
+                           (JANUARY, FEBRUARY etc.)
+            nDay           1-31
+                           
+            Date (int nWeeknum, int nDow,  int nMonth, int
+            nYear);
+                Constructs a Date object from the given
+            components, with each component constraint to
+            the following ranges:
+            Component      Range
+            nWeeknum       0-5
+            nDOW           1-7 or one of the Wday enums
+                           (SUNDAY, MONDAY, etc.)
+            nYear          -4713 - 9999
+            nMonth         1-12 or one of the Months enums
+                           (JANUARY, FEBRUARY etc.)
+            This constructor allows you to build a Date
+            object which is, for example, "The third
+            Wednesday in March, 1993".  If nWeeknum is
+            Zero (0),   the object created will be the
+            date  of the last weekday of that type in the
+            month.
+            
+            Date (const char * szDate);
+              Constructs a Date object from a character
+            string.  The string may be in any of the
+            following formats:  (These are also the
+            formats in which a Date can be output.)  The
+            constructor will determine which format it is.
+                 "09/05/1993"
+                 "5 Sep 93"
+                 "Sun Sept 5, 1993"
+                 "Sunday September 5, 1993"
+            Leading zeros and the century are allowed but
+            not required on all the above formats.   If
+            the century is missing, the date is assumed to
+            be in the 1900s.
+                 "19930905"
+                 "Today"  or  "."
+            These last two formats set the Date object to
+            todays date.  The word "Today" is not case
+            sensitive.  The period format (".") was added
+            to ease manual data entry.
+            
+            Date (const tm & TM);
+                Constructs a Date object from a tm type.
+            
+            Date (const DOSDATE_T &ds);
+                Constructs a Date object from a MSDOS
+            dosdate_t type.
+            
+Examples    Date date1(10,30,1962);  // October 30, 1962
+            Date date2(Date::OCTOBER, 30, 1962);    //
+            same
+            Date date3 = "8/8/88";   // August 9, 1988
+            Date date4(2450000L);    // From a Julian
+            Date date5(2,Date::SUNDAY,Date::MAY, 1993);
+                                // 2nd Sunday in May
+            
+
+            
+            Date::Day
+            
+Syntax      inline int Day(void) const;
+            
+Remarks     Returns the day of the month, in the range 1
+            through 31.
+            
+Example     Date d1("09/11/1993");
+            assert(d1.Day() == 11);
+
+            
+            Date::DaysInMonth
+            
+Syntax      unsigned int DaysInMonth(void) const ;
+            
+Remarks     Returns the number of days in the month of this
+            Date object, in the range 1  to  31.
+            
+Example     Date d1("09/11/1993");
+            assert(d1.DaysInMonth() == 30);
+
+            
+            Date::DOY
+            
+Syntax      int DOY(void) const;
+            
+Remarks     Returns the number of days since Jan. 1 for
+            this Date object, in the range 1 to 366.
+            
+Example     Date d1("02/15/1993");
+            assert(d1.DOY() == 46);
+
+            
+            Date::EOM
+            
+Syntax      inline Date EOM(void) const;
+            
+Remarks     Returns a new Date  object  which represents
+            the last day of the month of this Date object.
+            
+Example     Date d1 = Date("07/04/93");
+            Date d2 = d1.EOM();
+            assert(d2 == Date("07/31/93"));
+
+            
+            Date::eom
+            
+Syntax      DOSDATE_T eom(void) const;
+            
+Remarks     Returns a DOSDATE struct containing  a
+            decomposition of the date of the last day of
+            the month contained in this Date object.
+            
+            Note This function may only be  available with
+            MSDOS based compilers.  See the note for
+            getDate for structure layout.
+            
+Example     Date d1("09/11/1993");
+            DOSDATE_T  ddt;
+            ddt = d1.eom();
+            assert(ddt.day == 30);
+
+            
+            Date::EOY
+            
+Syntax      inline Date EOY(void) const;
+            
+Remarks     Returns a new Date object  which represents the
+            last day of the year of this Date object.
+            
+Example     Date d1 = Date("07/04/93");
+            Date d2 = d1.EOY();
+            assert(d2 == Date("12/31/93"));
+
+            
+            Date::FirstDOM()
+            
+Syntax      inline int FirstDOM() const ;
+            
+Remarks     Returns the numeric code  indicating the day of
+            the week the first day of the month of this date
+            object falls, in the range 1 through 7, where
+            Sunday is 1.  These correspond to the enum Wday
+            values.
+            
+Example     Date d1("09/11/1993");
+            assert(d1.FirstDOM() == Date::WEDNESDAY);
+
+            
+            Date::formatDate
+            
+Syntax      char * formatDate( int nType = DisplayFormat)
+            const;
+            
+Parameters  nType
+                 One of the format_type enum.   If nType is
+                 not given, it defaults to the current
+                 setting of the DisplayFormat class
+                 variable, which is initialized to MDY, but
+                 can be changes with the class function
+                 setFormat.
+                 
+Remarks          The following values yield the indicated
+                 formats:
+                     
+            MDY      "9/5/1993"
+            DAY      "Sunday"
+            MONTH    "September"
+            FULL     "Sunday, September 5, 1993"
+            EUROPEA  "5 September 1993"
+            N
+            COLLATE  "19930905"
+            Setting the Display options to DATE_ABBR
+            and/or NO_CENTURY will affect the appearance of
+            the above formats, except for COLLATE.
+                 
+Example     Date d1("09/11/1993");
+            const char *p = d1.formatDate(Date::FULL);
+            assert(strcmp(p, "Saturday, September 11,
+            1993")==0);
+            p = d1.formatDate(Date::COLLATE);
+            assert(strcmp(p, "19930911")==0);
+            Date::setFormat(Date::EUROPEAN);
+            p = d1.formatDate();
+            assert(strcmp(p, "11 September 1993")==0);
+
+            
+            Date::getDate
+            
+Syntax      DOSDATE_T getDate() const;
+            
+Remarks     Returns a DOSDATE_T struct  that contains the
+            decomposition of the date contained in this
+            Date object.
+            
+            Note  The actual name and location of DOSDATE_T
+            is implementation defined, and the structure
+            and function may only available with MSDOS
+            based compilers.  The members are as follows:
+            
+            Field          Value stored
+            _
+            day       Day of the month: (1-31)
+            month          Month of the year: (1-12)
+            year      Year: (0-119 relative to 1980)
+            dayofweek Day of the week: 0-6 (Sunday is 0)
+            
+            
+Example     Date d1("09/11/1993");
+            DOSDATE_T  ddt;
+            ddt = d1.getDate();
+            assert(ddt.day == 11);
+
+            
+            Date Holiday Constructors
+            
+Syntax      static Date::NewYearsDay(int nYear);
+            static Date::PresidentsDay(int nYear);
+            static Date::ValentinesDay(int nYear);
+            static Date::StPatricksDay(int nYear);
+            static Date::MothersDay(int nYear);
+            static Date::MemorialDay(int nYear);
+            static Date::FlagDay(int nYear);
+            static Date::FathersDay(int nYear);
+            static Date::CanadaDay(int nYear);
+            static Date::IndependenceDay(int nYear);
+            static Date::BastilleDay(int nYear);
+            static Date::LaborDay(int nYear);
+            static Date::VeteransDay(int nYear);
+            static Date::ThanksgivingDay(int nYear);
+            static Date::ChristmasDay(int nYear);
+            
+Parameters  nYear
+                The year in which the Date represented by
+            the new object is to fall.
+            
+Remarks     Returns a Date object represent the date of the
+            holiday.
+            
+Example     Date d = Date::PresidentsDay(1993);
+            assert(d == Date("02/15/1993"));
+            
+
+            
+            Date::isLeapYear
+            
+Syntax      bool  isLeapYear(void) const;
+            
+Remarks     Returns true if the year represented by this
+            Date object is a leap year, false if not.
+            
+Example     Date d("09/11/1993");
+            assert(d.isLeapYear() == false);
+
+
+            
+            Date::isDST
+            
+Syntax      bool Date::isDST( void ) const
+            
+Remarks     Returns true if the date represented by this
+            Date object is within Daylight Savings Time.
+            
+Example     Date d(Date::JULY, 4, 1993);
+            assert(d.isDST == true);
+
+
+            
+            Date::julDate
+            
+Syntax      inline long julDate() const;
+            
+Remarks     Returns the Julian date (the number of  days
+            since 1/1/4713BC).
+            
+Example     Date d(Date::JULY, 4, 1993);
+            assert(d.julDate() == 2449172);
+
+            
+            Date::NDOW
+            
+Syntax      inline int NDOW(void) const;
+            
+Remarks     Returns the numeric code  indicating the day of
+            the week  this date object falls, in the range
+            1 through 7, where Sunday is 1.  These
+            correspond to the enum Wday values.
+            
+Example     Date d=Date(Date::SEPTEMBER, 11,1993);
+            assert(d.NDOW() == 7);
+            assert(d.NDOW() == Date::SATURDAY);
+
+            
+            Date::NMonth
+            
+Syntax      inline int  NMonth(void) const;
+            
+Remarks     Return the months in the range 1 through 12.
+            These correspond to the enum Months.
+            
+Example     Date d("09/11/1993");
+            assert(d.NMonth() == 9);
+
+            
+            Date::NYear4
+            
+Syntax      inline int NYear4() const;
+            
+Remarks     Returns the year, in the range -4713 through
+            9999.
+            
+Example     Date d1= "Today";
+            assert( (d1.NYear4() >= 1993) && ( d1.NYear4()
+            <=2000)  );
+
+            
+            Date::operator <<
+            
+Syntax      friend ostream &operator << (ostream &os,
+            const Date &dDate);
+            friend ostream &operator << (ostream &os,
+            const DOSDATE_T &ddt);
+            friend ostream &operator << (ostream &os, enum
+            format_type ft);
+            
+Remarks     Outputs the formatted Date object to the
+            ostream object.  Format is based on the
+            current default setting, and can be changed by
+            Date::setFormat, or by outputing the format
+            type.   An output operator is also provided
+            for the non-class DOSDATE_T structure.
+            
+Example     Date d1="Today";
+            cout << "Today is " << Date::EUROPEAN << d1 <<
+            endl;
+
+            
+            Date::operator const char *
+            
+Syntax      operator const char *( void );
+            
+Remarks      This casting operator provides an efficient
+            method to access  a NULL-terminated character
+            string  representing the Date object.  No
+            characters are copied,; only a pointer is
+            returned.  The appearance of the string  is
+            based on the current  format established by
+            Date::setFormat. The default is MDY.
+            
+            Note The buffer whose address is returned by
+            this operator is shared by  all Date objects
+            and used by CDOW,  CMonth and formatDate, and
+            subsequent calls overwrite previous strings.
+            
+Example     Date d1("09/11/1993");
+            Date::setFormat(Date::FULL);
+            assert(strcmp(d1, "Saturday, September 11,
+            1993")==0);
+
+            
+            Date::operator +,-
+            
+Syntax      inline Date Date::operator + (long lDays)    const;
+            inline Date Date::operator + (int nDays)     const;
+            inline Date Date::operator - (long lDays)    const;
+            inline Date Date::operator - (int nDays)     const;
+            inline long Date::operator - (const Date &date)   const;
+            
+Remarks     The first four operators allow you to add and
+            subtract days from Date objects.  The fifth
+            allows you to subtract one Date object from
+            another yields a long giving the number of
+            days.
+            
+Example     Date d1 = Date("08/15/1993");
+            Date d2 = d1 + 13;  // 13 days later.
+            assert( d2 == Date("08/28/1993"));
+
+
+            
+            Date::operators +=, -=
+            
+Syntax      Date &operator += (long lDays);
+            Date &operator -= (long lDays);
+            
+Remarks     These operators allow you to add and subtract
+            a number of days to and from this Date object.
+            
+Example     Date d1 = Date("08/15/1993");
+            d1 += 10; // 10 days later.
+            assert( d1 == Date("08/25/1993"));
+            assert( d1 < d2);
+            assert( d1<=d2);
+
+
+            
+            Date::operators ++, --
+            
+Syntax      Date  operator ++ ();
+            Date  operator ++ (int nDays);
+            Date  operator -- ();
+            Date  operator -- (int nDays);
+            
+Remarks     Pre- and Post-fix auto-increment operators.
+            Allow you to step the Date object one day at a
+            time.
+            
+Example     Date  d1("09/11/1993");
+            Date  d2("09/12/1993");
+            assert( d1 ++ < d2);
+            assert(d1 == d2);
+
+            
+            Date::Set
+            
+Syntax      Date &Set(void);
+            Date &Set(long lJulian);
+            Date &Set(unsigned int nMonth, unsigned int
+            nDay, unsigned int nYear);
+            Date &Set(int nWeeknum, int nDow, short nMonth,
+            short nYear);
+            
+Remarks     These correspond to the constructors, and allow
+            you to change the value of any existing Date
+            object.
+            
+Example     Date d1, d2, d3;
+            d1.Set(); // Today's date.
+            d2.Set(Date::JANUARY, 15, 1975);
+            d3.Set(3, Date::SATURDAY, Date::JANUARY, 1987);
+            
+
+            
+            Date::setCentury
+            
+Syntax      static int setCentury(short nCentury);
+            
+Parameters  nCentury
+                 The new default century value.
+            
+Remarks     Allows you do change the century assumed when
+            translating a date with a 2 digit year.    The
+            normal default value is "1900".  nCentury  must
+            be either a multiple of 100, or in the range 1
+            to 99.   In the later case, it is multiple by
+            100 by setCentury before it's used.
+            
+Example     Date::setCentury(1800);
+            Date  d1("9/11/93");
+            assert(d1 == Date("09/11/1893"));
+
+            
+            Date::setDST
+            
+Syntax      bool Date::setDST(unsigned nMonth, unsigned
+            nDay) const
+            
+Remarks     Sets the date inwhich Daylight Savings Time is
+            assumed to begin. isDST() will return true for
+            any Date object from the Sunday before this
+            date. Returns false if the month or day given
+            were invalid.  Defaults to the dates for North
+            America.
+            
+Example     Date::setDST(Date::APRIL, 30);
+
+            
+            Date::setFormat
+            
+Syntax      inline static void setFormat (enum format_type
+            nFormat);
+            
+Parameters  nFormat
+                 A value from the format_type enum.
+            
+Remarks     Allows you to change the default format used
+            by formatDate and operator const *.
+             Must be one of the following:
+            
+            Value          Example
+            _
+            MDY      "9/5/1993"
+            DAY      "Sunday"
+            MONTH    "September"
+            FULL     "Sunday, September 5, 1993"
+            EUROPEAN "5 September 1993"
+            COLLATE   "19930905"
+            
+Example     Date d1("09/11/1993");
+            Date::setFormat(Date::FULL);
+            assert(strcmp(d1, "Saturday, September 11,
+            1993")==0);
+
+
+            
+            Date::setSTD
+            
+Syntax      bool Date::setSTD(unsigned nMonth, unsigned
+            nDay) const
+            
+Remarks     Sets the date inwhich Daylight Savings Time is
+            assumed to end. isDST() will return false for
+            any Date object from the Sunday before this
+            date. Returns false if the month or day given
+            were invalid. Defaults to the dates for North
+            America.
+            
+Example     Date::setDST(Date::OCTOBER, 30);
+
+
+            
+            Date::setOption
+            
+Syntax      static bool setOption (enum Options nOption, int
+            nAction=ON);
+            
+Parameters  nOption
+                 A value from the enum Options.
+            nAction
+                 Either ON or OFF.
+            
+Remarks     Allows you to modify the formatting options, for
+            the class.  nOption must be one of the
+            following:
+            Value          Action
+            _
+            NO_CENTURY     Years are formatting uses only 2
+            digits.
+            DATE_ABBR      Month & Day of week names are
+            abbreviated to 3 letters
+            
+Example     Date::setOption(Date::DATE_ABBR);
+            Date::setFormat(Date::FULL);
+            Date  d1 = "9/11/1993";
+            assert(strcmp(d1.formatDate(), "Sat, Sep 11,
+            1993")==0);
+            Date::setOption(Date::NO_CENTURY,Date::ON);
+            assert(strcmp(d1.formatDate(), "Sat, Sep 11,
+            93")==0);
+
+            
+            Date::WOM
+            
+Syntax      int WOM(void) const;
+            
+Remarks     Return the numeric week of the month, in the
+            range 1 through 6.
+            
+Example     Date d1 = "09/12/1993";
+            assert(d1.WOM() == 3);
+
+            
+            Date::WOY
+            
+Syntax      int WOY(void) const;
+            
+Remarks     Returns the numeric week of the year, in the
+            range 1 through 52.
+            
+Example     Date d1 = "02/15/1993";
+            assert(d1.WOY() == 7);
+

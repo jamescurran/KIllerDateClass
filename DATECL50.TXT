@@ -1,0 +1,718 @@
+                                                            
+   Documentation for "The Killer Date Class!" Version 5.00
+
+History                                                    1
+Implementation Notes                                       2
+Archive Contents                                           2
+       DATE50.ZIP                                       2
+       DATEAX.ZIP                                       3
+Release Notes:                                             3
+  v5.0 - JMC -  10/ 1/93                                3
+  v4.9 - TML - 01/26/94                                 5
+  v4.8 - TML - 11/18/93                                 5
+  v4.7 - TML - 09/20/93                                 5
+  v4.6 - TML - 08/04/93                                 6
+  v4.5 - TML - 06/21/93                                 6
+  v4.4 - TML - 06/03/93                                 6
+  v4.3 - TML - 3/24/93                                  6
+  v4.2 - TML - 3/13/93                                  6
+  v4.1 - KAA - 3/7/93                                   8
+  v4.0 - CP - 6/27/92                                   8
+  v3.1 - ES & CH - 8/5/91                               10
+A Word about the Calendar & this Date Class                11
+Future possibilities for enhancement, Part I               11
+Future possibilities for enhancement, Part II              11
+Porting Notes                                              12
+Restrictions & Copyrights                                  12
+
+History
+In the beginning, Steve Marcus (CIS 72007,1233) posted a
+  basic date manipulation/arithmetic class produced with
+  Borland C++ 2.0 in the  BPROGB forum, with a request for
+  suggestions and enhancements. This was on 6/19/91.
+
+A rather enterprising gentleman by the name of Eric Simon
+  (CIS 70540,1522) accepted the challenge, and produced a
+  new and improved version in the  course of a project he
+  was developing at work. He contributed the results to the
+  forum on 6/29/91, also inviting enhancements and
+  comments.
+
+About that time yet another enterprising gentleman named
+  Christopher Hill developed a need for a universal date
+  conversion routine for use in a business project he was
+  developing as well.  Browsing the same forum, he
+  encountered Eric's class, which provided much of the
+  functionality he needed - the basic julian-gregorian and
+  day of week conversion algorithms - relieving him of the
+  task of researching or re-inventing them. Eric had also
+  added overloaded + and - operators for incrementing date
+  objects by integer days, as well as several print
+  functions.  Chris needed additional features for his
+  implementations, thus was born versions 3.0 and 3.1(Hill
+  & Simon).
+
+Well, almost a year later I sent out an SOS for a date class
+  so I didn't have to re-invent the wheel and lo-and-behold
+  Chris responded.  Thus begins the saga of version 4.0!  I
+  would like to take this opportunity to do a little
+  witnessing: I looked all over for a date class that would
+  suit my needs!  I reviewed many implementations from
+  strangers and friends alike and I am here to tell ya'
+  folks, "It don't 'git no bedder 'n dis!"  This class is
+  VERY  cool!  Now I'm not trying to say that there's no
+  more room for enhancements (I'd really be crazy then!),
+  but I am saying that if your looking for a GOOD date
+  class (I'd say commercial quality because I have yet to
+  see a commercial product that implemented a date class to
+  my satisfaction!) then this is it!  So jump in and add to
+  it, make it better and we'll SAVE THE WORLD!  (Ok, so I
+  got a little carried away at the end. Just a little...)
+
+No, but really... This is a truly pleasing example of co-
+  operation among professionals, and an "object" study in
+  the code reusability of OOP, resulting in three releases
+  of one class within a single month by three different
+  analysts who have never met, and yet another upgrade
+  almost a year later by a fourth analyst (myself) and none
+  of us have yet to meet!  Chris thanks Steve and Eric for
+  their inspiration and generosity, and I thank all three
+  as well.
+
+I believe any of us would welcome further comments,
+  suggestions and enhancements as well.
+
+Good luck!  May the quest for the perfect date class
+  continue!
+                      Charles Price
+                 *    *    *    *
+Well, I must say, this is quite an impressive Date class!!!
+  And I must agree with Mr. Kenneth...it's probably one of
+  the BEST (if not the best) Date class I've seen so far
+  (but then again, I've not seen too many!).
+
+However, I thought it really could take more advantage of
+  some of the better features of C++ (ie. encapsulation!).
+  Thus, I decided to take on the challenge set forth by the
+  aforementioned 'Date'-crazed group.
+
+My changes are listed below in the Version 4.2 section.
+  Please let me know of any updates/changes that will
+  happen in the future!
+
+And of course, we all welcome any
+  comments/suggestions/participations!!!
+                Tr¡ Minh Ly  :)
+                 *    *    *    *
+To continue where Charles & Tr¡ leave off, the class sat
+  idle for about 8 months, when suddenly in March of '93,
+  three people, still all working independently, decided,
+  almost simultaneously, to add their own modifications.
+  Kenneth Argo got the ball rolling again, and then Tr¡
+  Minh Ly kept it active with regular updates.  During this
+  time, I was toiling away, spending about two years, off &
+  on, ripping out and replacing it's guts, while try to
+  keep up with Tr¡'s updates.
+                      James M. Curran
+                 *    *    *    *
+
+  v5.0       James M. Curran       72261,355     10/30/94
+  v4.9       Clyde Ford            71426,72      
+  v4.8       Tr¡ Minh Ly           73062,512     
+  v4.7       Tr¡ Minh Ly           73062,512     09/20/93
+  v4.6       Tr¡ Minh Ly           73062,512     08/04/93
+  v4.5       Tr¡ Minh Ly           73062,512     06/21/93
+  v4.4       Tr¡ Minh Ly           73062,512     06/03/93
+  v4.3       Tr¡ Minh Ly           73062,512     03/24/93
+  v4.2       Tr¡ Minh Ly           73062,512     03/13/93
+  v4.1       Kenneth A. Argo       71241,3635    03/07/93
+  v4.0       Charles Price         70541,3651    06/27/92
+  v3.1       Hill & Simon                        08/05/91
+  v3.0       Christopher Hill      72030,2606    07/11/91
+  v2.0       Eric Simon            70540,1522    06/29/91
+  v1.0       Steve Marcus            72007,1233    06/16/91
+
+
+Implementation Notes
+  All versions prior to 4.0 were written specifically for a
+  Borland C++ compiler.  However, version 4.0 was written
+  specifically for Microsoft C++ 7.0, and version 5.0
+  should work with either of those, and (hopefully) several
+  others.  We have attempted to optimize the code by
+  including the specification of "const" where applicable,
+  the passing of references where advisable, and the use of
+  constructor initializers where needed.   However, no
+  exhaustive analysis of this subject has been made.
+
+  To get the best overview of the class capabilities run
+  the demo program.   It may not look pretty, but with a
+  printout of a sample run and the code you should be able
+  to get a really good feel for it.   The complete class
+  specification is given in the accompanying file, DATE_MAN
+
+
+Archive Contents
+
+DATE50.ZIP
+   The main archive file contains:
+DATECL.MAK      make file to compiling class library for MSC
+                7.0/ MSVC++
+DATEDEMO.MAK    make file to compile & link the demo for MSC
+                7.0/ MSVC++
+DATECL.PRJ      project file for compiling class library
+                under Borland C++ 3.1
+DATEDEMO.PRJ    project file for compiling demo under Borland
+                C++ 3.1
+DATECL50.TXT    This file, in straight ASCII text.
+DATE_MAN.TXT    Class reference manual.
+DATECL.H        the header file
+DATECL.CPP      the member functions
+DATEDEMO.CPP    a test program (and a messy one at that!)
+DATECL.LIB      a lib file so you can use it even if you don't
+              have MSC7.0, or you just don't feel like
+              fussin' with it!
+
+DATEAX.ZIP
+The Auxillary Package (a separate archive) contains these
+  optional files:
+DATECL50.DOC    This file, in Word for Windows format.  If
+              you have WinWord, use this file instead of
+              the ASCII version.  It's formatted properly.
+DATE_MAN.DOC    The Class Reference Manual, also in WinWord
+              format.
+CLSS_DOC.DOT    WinWord template used to create the above
+              files.
+DATE_MAN.CPP    All the examples given in DATE_MAN.  Should
+              just print today's date.  Will assert if
+              something goes awry.
+BABY.CPP        A simple command-line app that uses the Date
+              class. (Written for my Brother, the
+              Obstetrician, to calculate due dates.)
+
+
+
+Release Notes:
+v5.0 - JMC -  10/ 1/93
+  Made Class compatible MSC7/VC++ & BC 3.1, using the
+  compilers' internal, predefined symbols, thus removing
+  the need to manually define _MSC or _BCC.
+
+  Attempted to made compatible with Zortech C++.   I have
+  compiled it as best I could using the version of Zortech
+  C++ that was provided with Tom Swan's book "Learning C++"
+  (c 1991).    This is basically a striped-down rendering
+  of version 2.1, with some rather significant limitations,
+  notably, a very small maximum file size.  It aborts with
+  an "out of memory" error midway through DATECL.CPP,
+  DATEDEMO.CPP, and DATE_MAN.CPP.  Only BABY.CPP (in the
+  separate auxiliary files archive) compiles completely.
+  The others experience no other errors up to the point
+  where they run out of memory.  Any field reports from
+  people with the full package will be greatly appreciated.
+  (see also the Porting Notes section, below)
+
+  Have removed or isolated all MS-DOS specific code.  It
+  should now compile (with only slighted reduced
+  functionality) with  any C++ based on ANSI C.  (Mainly, I
+  get the current date using the ANSI C time()/struct TM
+  method, instead of  _dos_getime() ).
+
+  Changed Julian_to_mdy() & mdy_to_julian() to remove
+  floating point.  This change, by itself, will reduce the
+  EXE size of a program  which uses this class, but
+  otherwise doesn't use floating point, by about 15K.
+  They're also faster this way.
+
+  Converted data members, that were previously changed from
+  ints to chars, back into shorts.  This was a false
+  economy.  Since ints are, by definition, the natural data
+  size for the hardware, what little we save in data (here,
+  2 bytes) space we lose in code space, as the compiler
+  generates extra instructions to convert the values into
+  ints for processing, then back into chars for storage.
+  By my calculation, we'd  have to have a minimum of 30
+  date object active at one time just to break even in the
+  memory required, plus using chars  adds an (admittedly,
+  probably imperceptible) speed lose in processing.
+
+  Removed the graphic line characters from the source code
+  files. They looked nice under DOS, but really offended
+  Borland's &  Microsoft's Windows IDEs.  (And who knows
+  what effect they'd  have an a UNIX terminal?)
+
+  Fixed two bad bugs in the AddMonths() function.  First,
+  it assumed that if the date wrapped to the next (or
+  previous) year, it would be by only one month.  A more
+  subtle bug was that it assumed that it would only wrap by
+  one year. eg: Date Indep(7,4,1776);
+  Indep.AddMonths(2400); cout << Indep; would output
+  "1/4/1777" instead of "7/4/1976" (Really, I DID do this
+  before Tr¡ did it in version 4.6; It  just took me a
+  while to release this <g>)
+
+  The default year when setting a date from a string is now
+  the current year. ie. previously   Date date = "3/15";
+  would be "March 15, 0 B.C.E.".  It now uses the current
+  year.  Similarly,  when a two-digit year is use, it is
+  assumed to  be in this century.  ie, previously  Date
+  date = "3/15/93"; would be presumed to be in the first
+  century.  It's now assumed to be in 1993.   This can be
+  changed with the  setCentury function.   If, for some
+  bizarre reason, you  actually want to refer to dates in
+  the first century AD, use "setCentury(0);".  This will
+  return the class to it's previous behavior.
+
+  The date from string function now just LOOKS at the
+  string passed to it, so neither modifies the passed
+  string, nor requires a temporary copy of the string.
+
+  Centralized common strings.   This saves some space and
+  should make  internationalization rather simple.  I've
+  started this by adding  the days, months and  error
+  messages for Spanish and German. Compile the class with
+  _ESPANOL or _DEUTSCHEN defined. (NOTE:  I'm strictly mono-
+  lingual and have gotten this information  from foreign
+  language dictionaries.  Any corrections from those who
+  actually  speak these languages would be greatly
+  appreciated, as would the words for  other languages.
+  Also, I've used the standard English letters for the
+  foreign word, instead of the "more appropriate" letters
+  with accents and umlauts, since there is no standard
+  ASCII values for those characters, and I'm trying to make
+  this compatible to compilers outside the MSDOS world)
+
+  Numerous minor changes to "tighten" the library up a bit.
+  I've made some trivial functions "inline"; in particular,
+  the arithmetic and comparison operators.  The only change
+  that may break existing code using earlier version of
+  this class is that type cast operator has been changed
+  from "operator  char *" to "operator const char *" since
+  this better reflects the value actually returned.  Even
+  under previous versions, attempting to modify the string
+  returned would probably not have the desired effect.
+  Now, this restriction is merely enforced by the compiler.
+
+  Added "COLLATE" format ("YYYYMMDD") to generate a
+  sortable key.  This can be stored in databases and other
+  places where it will be accessed by straight C programs,
+  or otherwise be unable to use the class comparison
+  operators.
+
+  Added enums for the months & days of the week.
+
+  Added a new constructor which creates a date based on a
+  certain weekday in a certain week of a month & year.  eg.
+  Date(3, MONDAY, MARCH, 1993); builds the Date object for
+  the 3rd Monday of March, 1993.  If the first parameter is
+  Zero, the last date of that day for the month is used (ie
+  Date(0, MONDAY, MARCH, 1993) is the last Monday in
+  March).
+
+  Added a new Set() function to go with the above new
+  constructor.
+
+  Added functions for a host of holidays.
+
+  Added an output manipulator.  The format style can now be
+  changed by using '<<' to "output" one of the format_type
+  enums to an ostream, eg cout << Date::EUROPEAN << date1
+  << endl;
+
+  Will initialize a simple period (ie Date d4 = ".";) to
+  today's date. (I did this because I needed to get a date
+  string from the command line)
+
+  Returned the ++ and -- operators to their pre-4.5
+  condition.  (They were  correct in the first place.)  In
+  case you haven't been paying attention, the saga of the
+  auto-incremetors goes as such:  Some time prior to v3.0,
+  the prefix incrementers were added to the class.  In
+  v4.0, the postfix operators were added, but with
+  functionality identical to the prefix operators.  In
+  v4.1, the postfix operators were corrected to work in the
+  manner expected of postfix operators.  In v4.5, the
+  functionality of the prefix & postfix operators was
+  reversed, in attempts to fix a nonexistent bug.  They've
+  now been restored.  I pointed this out to Tr¡, who
+  decided I was taking too long get v5.0 out the door, and
+  so fixed them in v4.7.  I've double checked them, and
+  given my rabbit's foot a healthy rub, so I really think
+  we can put this matter to rest now....
+
+  Wrote proper class description reference manual (in the
+  separate document DATE_MAN).  Apologies to Microsoft's
+  technical writers who's style for their "Microsoft C/C++
+  Class Library Reference" I've rather blatantly stole.  I
+  revised much of this file, so that it's a bit better
+  organized, and with less redundancy, plus made it clear
+  when the word "I" is used, which of the class's seven
+  authors is speaking  (or at least "I" tried) . The
+  reference manual was created in, and this document
+  converted into, Microsoft Word format for editing,  and
+  then convert back to simple text for distribution.   The
+  Word files are available, and if you have access to MS
+  Word, that is the best way to deal with this
+  documentation.  A Windows WinHelp version of both these
+  documents combined will be forthcoming (eventually, but
+  remember, I sat on this library for about a year before
+  releasing it, so don't hold your breath).
+
+ú    Since the ANSI/ISO C++ committee working papers
+  currently propose a new intrinsic data type, "boolean",
+  this has been simulated with an boolean enum, and all member
+  functions which formerly return "1 for TRUE, and 0 for
+  FALSE",  now return "true" and "false" as defined in this
+  enum.   When the standard is complete, and compilers
+  recognize these new keywords, this enum can be removed.
+
+v4.9 - TML - 01/26/94
+
+ú    Version 4.9 fixes the Date::AddMonths() member
+  function.  The problem was it did not adjust the day value
+  after the new month's value have been calculated.  For
+  example, if the current date is `08/31/1993' and 6 months is
+  added to it using Date::AddMonths(), then the result is:
+  02/31/1994.  Date::AddMonths() will now set the day value as
+  appropriate for the new month.  If the day value is greater
+  than the # of days in that month, then it will roll the
+  month over to the next month and set the day value to the
+  difference between the day value and the # of days in the
+  that month.  Thanks to Patrick Cunningham this bug.
+  
+ú    This version also expands the Date::isDST()
+functionality by adding two new member functions:
+Date::setDST() and Date::setSTD().  Date::setDST() sets the
+month and day on which DST date begins.  Likewise,
+Date::setSTD() sets the month and day on which STD date
+begins.  Thanks to Marcelos Cantos for this suggestion.
+
+***********************    WARNING TO BORLAND C++ USERS
+  *********************
+A  couple  of people have kindly informed me that the  class
+Date  is a pre-defined class in Borland C++.  Thus, you will
+have  to  rename this class to another name like  xDate,  or
+DateCL or whatever is appropriate for your implementation!!!
+************************************************************
+  *******************
+v4.8 - TML - 11/18/93
+
+ú    Version 4.8 adds a new member function Date::isDST()
+  which was contributed by Clyde Ford (CIS 71426,72).
+  Date::isDST() determines if the current date object is
+  "within daylight savings time as defined in the United
+  States".  If so, then it will return true, otherwise false
+  is returned.
+
+v4.7 - TML - 09/20/93
+  Version 4.7 un-fixes the serious bug in the code for
+  unary operators ++/--. In other words, they were
+  originally correct.  I guess I got really confused when I
+  last talked to Jorge.
+
+  Thanks to James M. Curran for informing me of this
+  change.  Also, James has a new version of DateClass (5.0)
+  currently in the works.  I think all of us will be very
+  impress and receptive of his version!!!
+v4.6 - TML - 08/04/93
+  Fixes the Date::AddMonths() member function.  It does not
+  add or subtract the number of months correctly.   Thanks
+  to Patrick Cunningham for finding this bug!
+
+v4.5 - TML - 06/21/93
+  Fixes a very serious bug in the code for unary operators
+  ++/--.  I confused myself with the formats for prefix and
+  postfix operations.  (I got them reversed.)  Jorge Padron
+  was kind enough to inform me of my mistake.
+
+  I also removed the 'const' keyword from parameter
+  statements for functions which require variables to be
+  passed by values (as opposed to pass by reference.)  For
+  example,
+              Date  operator + (const long i);
+is changed to:
+              Date  operator + (long i);
+I did it in the first place because I was trying to be
+  consistent, but I realize that this can be confusing
+  (especially those that are just learning C++).  Jorge
+  also pointed this out to me.
+
+v4.4 - TML - 06/03/93
+  Adds a little validation to the value of the day and
+  month when an object is created via a string argument.
+  For example, month must be from (1..12) and day must be
+  from (1..n) where 'n' is the number of days for the given
+  month.
+Thus, the following statements:
+         Date myDate("02/31/1993");
+         cout << myDate.formatDate() << "\n";
+will result in an "invalid date" output!
+
+v4.3 - TML - 3/24/93
+  Add more flexibility in the constructor to support the
+  many string formats that are used by the Date class.
+
+  Fixed Date::Date(char *) and made it accept the string as
+  a 'const' argument. Also, made a copy of the string
+  ('dat') before passing it to strtok() since this function
+  modifies its argument!
+
+  Removed the smaller buffer ('buf') and make use of only
+  one buffer to save memory.
+
+  Re-coded the type cast operator to call formatDate() so
+  the current format and options will be applied to the
+  resulting string.
+
+  Changed year to 'int' type to support B.C.E. dates.
+v4.2 - TML - 3/13/93
+
+  Made it compatible to both Borland C++ (v 3.1) and
+  Microsoft C++ (v 7.0) via #define switches.  Define _BCC
+  for Borland and _MSC for Microsoft. See the GO.BAT batch
+  file!
+
+  Fix memory problems in Version 4.1.  There were three
+  'deadly' memory threats introduced by Version 4.1:
+
+  (a) In the destructor function, it is erroneous to delete
+     buf without referring to it as a vector of characters.
+     The proper method would be:
+              delete [] buf;      // Must have the
+     brackets!
+  
+       Please review the section "The Free Store and Class
+       Arrays" on page 95-99 of the _C++ Tutorial_ from
+       Microsoft's C++ package!
+  
+  (b) In the Date::operator char *() function, variable buf
+     was allocated space every time the function was called.
+     This causes memory leaks when the same Date instance
+     calls this operator function more than once during its
+     lifetime.
+  
+  (c) Also in the Date::operator char *() function,
+     variable buf was assigned the address of the constant
+     string BadDate without prior release of the memory for
+     buf.
+  
+  Fix implementation of the prefix/postfix operators to
+  properly reflect the before/after syntax of the unary
+  incrementor.  (C++ provides only the facility to
+  determine which type of operator is being used, but the
+  implementation is left to the programmer!)
+
+  Moved all buffer variables to the class level and made
+  them private static member data. for the
+  Date::formatDate() function, the buffer is renamed to
+  'cbuf' for the Date::Operator () function, the buffer is
+  named 'buf'
+
+  Move all publicly declared variables/enums into the
+  public portion of the class.  Also redefine the #define
+  constants to an enum type.  By doing this, we are taking
+  advantage of C++'s encapsulation feature and reduce
+  pollution of the global variable names.  This concept is
+  based on the ios class. (ie. ios::hex, ios::dec, etc.)
+
+  Also redeclare the 'friend' functions to be member
+  functions (again, making use of encapsulation!)
+
+  Rewrote the Date::setOption() function.  (Made it more
+  compact!)
+
+  Made use of the 'const' feature of C++ to ensure the
+  references returned by most of the member functions will
+  be non-modifiable by the calling program. (ie. force them
+  to make a copy of it if they want to modify it!)
+
+  In the function Date::formatDate(), for the case
+  Date::EUROPEAN and Date::EUROPEAN, fix the code
+  (day_of_week < 0) to (day_of_week < 1).  Also removed the
+  statement strcat(cbuf, " ") and put the space into the
+  sprintf() statement:
+
+  sprintf( cbuf+strlen(cbuf), " %d", abs(year) );
+  
+  Modified the following functions to return a Date object
+  instead of a reference to a Date object!
+
+  Date operator + (const long i);
+  Date operator +  (const int  i);
+  Date operator - (const long i);
+  Date operator - (const int  i);
+  Date operator ++ ();
+  Date operator ++ (int);
+  Date operator -- ();
+  Date operator -- (int);
+  
+  This is important because in Version 4.0 and before, the
+     binary operators (+ and -) were declared to return
+     references to Date objects since these functions
+     dynamically creates a Date object when the function is
+     called. However, there were no provisions for deleting
+     these objects once they leave the scope of the
+     function.
+  
+  In Version 4.1, Mr. Kenneth got rid of this problem of
+     allocation by forcing the compiler to generate code to
+     allocate stack space to return the objects.  However,
+     Mr. Kenneth 'forget?' to remove the references
+     declaration.  Why would this cause problem?  Because
+     when the calling program is expecting a reference in
+     return (as opposed to a copy of the object), then that
+     reference will be invalid since after the function
+     terminates, the temporary object (used to return the
+     value to the calling program) will also be terminated.
+     Thus, the reference to the object is rendered obsolete.
+
+  To test this, I wrote the following program:
+
+  #include "datecls4.h"
+  #include "iostream.h"
+  
+  void showDate(Date &dt)
+  {
+    cout << dt;    // The (char *) type cast operator is in
+  }            // effect here!
+  
+  void main()
+  {
+    Date z("04/13/1967");
+    showDate(z+3);
+  }
+  
+  RESULT:
+    *** destructor called ***          // Temporary object
+     is destroyed
+    237/7/21
+    *** destructor called ***          // Object 'z' is
+     destroyed
+  
+
+  As dictated by the result, the temporary object (created
+     by the + operator) is destroyed before its values are
+     displayed.
+  
+  By declaring the functions to return an actual Date
+     object instead of a reference, we force the compiler to
+     make a copy of it and return it to the calling program!
+v4.1 - KAA - 3/7/93
+  Fixed date display when using the * operator to get a
+  string pointer.  The code would return xx/xx/  xx if you
+  only supplied a 2 digit year.
+
+  Optimized the * operator so Invalid Dates would use a
+  common "invalid date" text pointer.
+
+  Fixed the +, - and * operators to get rid cases where
+  memory leaks would occur.
+
+  Fixed some variable casts so the code can be compiled
+  with /W4
+
+  Added a destructor to delete items created dynamically on
+  behalf of the object (ie. char *).
+
+v4.0 - CP - 6/27/92
+  Most of the modifications made to version 3.1 were to
+  expand the public interface.
+
+  Date &Set() - Sets self to current system date; this may
+  also be accomplished by passing initializing a date
+  object like so:     Date oDate1("Today");  // See demo
+  for examples
+
+  Date &Set(long lJulian) - Sets self to the specified
+  julian date
+
+  Date &Set(int nMonth, int nDay, int nYear) - Sets self to
+  specified month, day, and year.  The year must be 4
+  numbers long, not 2.
+
+  Date &AddWeeks(int nCount = 1) - Add or subtract(use a
+  negative int) a specified number of weeks to/from self.
+
+  Date &AddMonths(int nCount = 1) - Add or subtract(use a
+  negative int) a specified number of months to/from self.
+
+  Date &AddYears(int nCount = 1); - Add or subtract(use a
+  negative int) a specified number of years to/from self.
+
+  int   Day() const - Returns numeric day of the month for
+  self
+
+  int   DaysInMonth() - Returns number of days in month
+  (1..31)
+
+  int   FirstDOM() const - Returns the First Day Of Month
+  for self as a numeric (1..7)
+
+  char *CDOW() - Returns character Day Of Week
+  ('Sunday'..'Saturday')
+
+  int   NDOW() const - Returns the numeric day of the week
+  for self(1..7)
+
+  int   WOM() - Returns numeric Week Of Month  (1..6)
+
+  int   WOY() - Returns numeric Week Of Year   (1..52)
+
+  char *CMonth() - Character Month name ("January")
+
+  int   NMonth() const - Month Number (1..12)
+
+  Date  BOM() - Returns a new date object that is the First
+  Date Of the Month in self.  For example:
+  
+  Date   Date1;
+  Date   Date2("Today");
+  Date1 = Date2.BOM();
+  
+  Date  EOM() - Returns a new date object that is the Last
+  Date Of the Month in self.  (See example in BOM() above)
+
+  int   NYear4() const - Returns the numeric value of the
+  year for self in the form 1992.
+
+  Date  BOY() - Returns a new date object that is the First
+  Date Of the Year in self. (See example BOM() above)
+
+  Date  EOY() - Returns a new date object that is the Last
+  Date Of the Year in self. (See example BOM() above)
+
+  Added overloaded operators for + and - to accept int's.
+
+  Added overloaded operators for ++ and -- for Postfix
+  notation
+
+  Switched from the Borland style DOS date structure(date)
+  to the Microsoft version(_dosdate_t).
+
+v3.1 - ES & CH - 8/5/91
+Subsequent to release 3.00, we (Hill & Simon) decided to
+  collaborate on several further releases of this date
+  class. This, the first, contains two new features, as
+  well as a few minor bug fixes.
+
+  There was a minor bug in the original Computer Language
+  julian/gregorian date conversion routines having to do
+  with negative years.
+
+  The isLeapYear function did not take into account that,
+  prior to 1582,   years ending in 00 were also leap years.
+
+  The two-dimensional array of the number of days in each
+  month has been eliminated in favor of a computational
+  approach.
+
+  The function Date::setFormat(XXXX) maintains a static
+  variable (one occurrence for all Date objects, which
+  controls the format which the   << operator uses to print
+  objects. "XXXX" can be MONTH, MDY, DAY, FULL,   or
+  EUROPEAN.  The setting defaults to MDY, but once altered,
+  remains altered until reset by another call to setFormat.
+
+  The function Date::setOption(Option, Action) maintains a
+  similar static   variable which enables certain print
+  formatting options. Available options at this point are:
+
